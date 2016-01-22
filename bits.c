@@ -234,9 +234,12 @@ int getByte(int x, int n) {
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 5
  *   Rating: 2
+ * AND x by 1 to get the LSB. Shift 31 left then 31 right to fill with this bit
  */
 int copyLSB(int x) {
-  return 2;
+   //Get least significant bit then shift left 31. Use the arithmetic right shift
+   // to fill the bitstring with that bit
+  return (x & 1) << 31 >> 31;
 }
 /*
  * logicalShift - shift x to the right by n, using a logical shift
