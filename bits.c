@@ -248,9 +248,14 @@ int copyLSB(int x) {
  *   Legal ops: ~ & ^ | + << >>
  *   Max ops: 16
  *   Rating: 3
+ * To achieve the logical right shift the following happens:
+ * 1. Create the number 0111 1111 1111 1111 1111 1111 1111 1111
+ * 2. Shift the above number right n-1 bits (>> n << 1).
+ * http://www.catonmat.net/blog/low-level-bit-hacks-you-absolutely-must-know/
  */
 int logicalShift(int x, int n) {
-  return 2;
+  //do arithmetic right shift and mask with the proper number
+  return (x >> n) & (1 << 31 >> 31) & ~(1 << 31) >> n << 1;
 }
 /*
  * bitCount - returns count of number of 1's in word
