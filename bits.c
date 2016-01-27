@@ -255,7 +255,8 @@ int copyLSB(int x) {
  */
 int logicalShift(int x, int n) {
   //do arithmetic right shift and mask with the proper number
-  return (x >> n) & (1 << 31 >> 31) & ~(1 << 31) >> n << 1;
+   return (x >> n) & (((~0 ^ (128 << 24)) >> n << 1) + 1);
+//return (x >> n) & (1 << 31 >> 31) & ~(1 << 31) >> n << 1;
 }
 /*
  * bitCount - returns count of number of 1's in word
@@ -296,7 +297,7 @@ int leastBitPos(int x) {
  */
 int tmax(void) {;
    // take the inverse of 0 to get all 1's, then clear the sign bit
-      return ((~0) ^ (0x80 << 24));
+      return ((~0) ^ (128 << 24));
 }
 /*
  * isNonNegative - return 1 if x >= 0, return 0 otherwise
