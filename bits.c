@@ -39,7 +39,7 @@ team_struct team =
       or, ID1+ID2 where ID1 is the login ID of the first team member
       and ID2 is the login ID of the second team member.
        Example: joestudent+zmename */
-    "westonkd+",
+    "westonkd+jkevinj",
    /* Student name 1: Replace with the name of first team member */
    "Weston Dransfield",
    /* Login ID 1: Replace with the login ID of first team member */
@@ -47,9 +47,9 @@ team_struct team =
 
    /* The following should only be changed if there are two team members */
    /* Student name 2: Name of the second team member */
-   "Kevin",
+   "Kevin Johnson",
    /* Login ID 2: Login ID of the second team member */
-   "?"
+   "jkevinj"
 };
 
 #if 0
@@ -295,7 +295,10 @@ int leastBitPos(int x) {
  *   Rating: 1
  */
 int tmax(void) {
-  return 2;
+   unsigned int num = 0;
+   // take the inverse of 0 to get all 1's, then arithmetic shift it one to the right to make it
+   // non-negative.
+   return ((~num) >> 1);
 }
 /*
  * isNonNegative - return 1 if x >= 0, return 0 otherwise
