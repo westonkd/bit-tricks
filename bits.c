@@ -294,11 +294,9 @@ int leastBitPos(int x) {
  *   Max ops: 4
  *   Rating: 1
  */
-int tmax(void) {
-   unsigned int num = 0;
-   // take the inverse of 0 to get all 1's, then arithmetic shift it one to the right to make it
-   // non-negative.
-   return ((~num) >> 1);
+int tmax(void) {;
+   // take the inverse of 0 to get all 1's, then clear the sign bit
+      return ((~0) ^ (0x80 << 24));
 }
 /*
  * isNonNegative - return 1 if x >= 0, return 0 otherwise
@@ -344,7 +342,9 @@ int divpwr2(int x, int n) {
 int abs(int x) {
    // find the sign bit
    int sign = (x >> 31) & 1;
+   // find the mask
    int mask = (x >> 31);
+   // apply the mask and add the sign bit
    return (x ^ mask) + sign;
 }
 /*
