@@ -308,7 +308,8 @@ int tmax(void) {
  *   Rating: 3
  */
 int isNonNegative(int x) {
-  return 2;
+   // the first bit is the sign, so check it
+   return !(x >> 31);
 }
 /*
  * isGreater - if x > y  then return 1, else return 0
