@@ -287,7 +287,8 @@ int bang(int x) {
  *   Rating: 4
  */
 int leastBitPos(int x) {
-  return 2;
+   int mask = ((~x + 1)) & x;
+   return x & mask;
 }
 /*
  * TMax - return maximum two's complement integer
