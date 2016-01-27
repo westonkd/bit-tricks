@@ -330,7 +330,9 @@ int isGreater(int x, int y) {
  *   Rating: 2
  */
 int divpwr2(int x, int n) {
-    return 2;
+   // not quite working... but close?
+   int sign = ( x >> 31) & 1;
+   return ( x >> n ) + sign;
 }
 /*
  * abs - absolute value of x (except returns TMin for TMin)
@@ -340,7 +342,10 @@ int divpwr2(int x, int n) {
  *   Rating: 4
  */
 int abs(int x) {
-  return 2;
+   // find the sign bit
+   int sign = (x >> 31) & 1;
+   int mask = (x >> 31);
+   return (x ^ mask) + sign;
 }
 /*
  * addOK - Determine if can compute x+y without overflow
@@ -351,5 +356,5 @@ int abs(int x) {
  *   Rating: 3
  */
 int addOK(int x, int y) {
-  return 2;
+   return 2;
 }
