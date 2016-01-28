@@ -274,9 +274,20 @@ int bitCount(int x) {
  *   Legal ops: ~ & ^ | + << >>
  *   Max ops: 12
  *   Rating: 4
+ * This method first puts all non 0 values into the form 1111. If the value is
+ * 0 it puts it stays in the form 00000
+ *
+ * The final step is to add 1. This overflows 1111 to 0000 and changes 0000 to
+ * 0001.
+ * http://stackoverflow.com/questions/4764971/implementing-logical-negation-with-only-bitwise-operators-except
  */
 int bang(int x) {
-  return 2;
+   //take advantage of overflow to convert 0000 to 1111 and wxyz to 1111
+   //where wxyz are not all zeros
+   int converted = ((x >> 31) | ((~x + 1) >> 31));
+
+   //overflow 1111 to 0000 or change 0000 to 0001
+   return converted + 1;
 }
 /*
  * leastBitPos - return a mask that marks the position of the
@@ -331,7 +342,9 @@ int isGreater(int x, int y) {
  */
 int divpwr2(int x, int n) {
    // not quite working... but close?
-   int sign = ( x >> 31) & 1;
+
+   int sign = (x >> 31) & 1;
+   printf("%d + %d", sign, x >> n );
    return ( x >> n ) + sign;
 }
 /*
