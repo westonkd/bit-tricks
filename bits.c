@@ -269,7 +269,7 @@ int bitCount(int x) {
    /* So the idea is to 'divide abd conquer.' It counts the 1's in
       each pair of bits, then in each nibble, then each byte, then
       each pair of bytes, then the whole thing all together.
-      
+
       "Hacker's Delight" by Henry S. Warren has more on how it is done. */
    int fives   = (((((0x55 << 8 ) | 0x55) << 8 ) | 0x55) << 8 ) | 0x55;
    int threes  = (((((0x33 << 8 ) | 0x33) << 8 ) | 0x33) << 8 ) | 0x33;
@@ -356,7 +356,7 @@ int isGreater(int x, int y) {
    i = (i >> 8 ) | i;
    i = (i >> 16) | i;
 
-   // find the most significant different bit 
+   // find the most significant different bit
    i = i & (~(i >> 1) | (0x80 << 24 ));
 
    // make the actual comparison against the numbers and the significant bit
@@ -373,13 +373,16 @@ int isGreater(int x, int y) {
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 15
  *   Rating: 2
+ * This method adds a masked sign to the value shifted by n.
+ * Adding the masked sign is necessary for negative values.
+ * http://stackoverflow.com/questions/5061093/dividing-by-power-of-2-using-bit-shifting
  */
 int divpwr2(int x, int n) {
-   // not quite working... but close?
+   //create mask
+   int mask = ((1 << n) + ~0);
 
-   int sign = (x >> 31) & 1;
-   //printf("%d + %d", sign, x >> n );
-   return ( x >> n ) + sign;
+   //add the sign with applied mask and shift by n
+   return (x + ((x >> 31) & mask)) >> n;
 }
 /*
  * abs - absolute value of x (except returns TMin for TMin)
