@@ -150,16 +150,6 @@ NOTES:
      this file the authoritative source.
 #endif
 
-void int_to_bin(int num) {
-  char str[33] = {0};
-  int i;
-  for (i=31; i>=0; i--) {
-    str[i] = (num&1)?'1':'0';
-    num >>= 1;
-  }
-  printf("%s\n", str);
-}
-
 /*
  * STEP 3: Modify the following functions according the coding rules.
  *
