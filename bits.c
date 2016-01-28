@@ -219,11 +219,8 @@ int isNotEqual(int x, int y) {
  * Use 0xFF as a mask and then just push the desired byte over to it and and.
  */
 int getByte(int x, int n) {
-   //Size of a byte
-   int byteSize = 8;
-
    //shift x to the proper position to apply the mask
-   x = x >> byteSize * n;
+   x = x >> (n << 3);
 
    //AND x and the mask to get the proper bit
   return x & 0xFF;
