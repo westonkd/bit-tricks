@@ -343,7 +343,28 @@ int isNonNegative(int x) {
  *   Rating: 3
  */
 int isGreater(int x, int y) {
-  return 2;
+   /* find the xor of the two numbers, determine the most significant different bit,
+      then compare the numbers to find where x has a 1 instead of a 0 in y (except sign bit) */
+
+   // take the XOR to find what is different
+   int i = x ^ y;
+
+   // smear the bits
+   i = (i >> 1 ) | i;
+   i = (i >> 2 ) | i;
+   i = (i >> 4 ) | i;
+   i = (i >> 8 ) | i;
+   i = (i >> 16) | i;
+
+   // find the most significant different bit 
+   i = i & (~(i >> 1) | (0x80 << 24 ));
+
+   // make the actual comparison against the numbers and the significant bit
+   // (makes use of tmin and tmax)
+   i = i & ((x ^ (0x80 << 24)) & (y ^ ((~0) ^ (128 << 24))));
+
+   // do !! to force it into a 1 or 0
+   return !!i;
 }
 /*
  * divpwr2 - Compute x/(2^n), for 0 <= n <= 30
