@@ -25,7 +25,7 @@
 
 #include "btest.h"
 #include <limits.h>
-#include <stdio.h>
+
 
 /*
  * Instructions to Students:
@@ -335,20 +335,21 @@ int isGreater(int x, int y) {
 
    // take the XOR to find what is different
    int i = x ^ y;
-
+   int msb1 = (0x80 << 24);
+   
    // smear the bits
    i = (i >> 1 ) | i;
    i = (i >> 2 ) | i;
    i = (i >> 4 ) | i;
    i = (i >> 8 ) | i;
    i = (i >> 16) | i;
-
+   
    // find the most significant different bit
-   i = i & (~(i >> 1) | (0x80 << 24 ));
+   i = i & (~(i >> 1) | ( msb1 ));
 
    // make the actual comparison against the numbers and the significant bit
    // (makes use of tmin and tmax)
-   i = i & ((x ^ (0x80 << 24)) & (y ^ ((~0) ^ (128 << 24))));
+   i = i & ((x ^ ( msb1 )) & (y ^ ((~0) ^ ( msb1 ))));
 
    // do !! to force it into a 1 or 0
    return !!i;
