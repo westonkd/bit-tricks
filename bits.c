@@ -266,7 +266,20 @@ int logicalShift(int x, int n) {
  *   Rating: 4
  */
 int bitCount(int x) {
-  return 2;
+   /* So the idea is to 'divide abd conquer.' It counts the 1's in
+      each pair of bits, then in each nibble, then each byte, then
+      each pair of bytes, then the whole thing all together.
+      
+      "Hacker's Delight" by Henry S. Warren has more on how it is done. */
+   int fives   = (((((0x55 << 8 ) | 0x55) << 8 ) | 0x55) << 8 ) | 0x55;
+   int threes  = (((((0x33 << 8 ) | 0x33) << 8 ) | 0x33) << 8 ) | 0x33;
+   int zerof   = (((((0x0F << 8 ) | 0x0F) << 8 ) | 0x0F) << 8 ) | 0x0F;
+   int i = x + ~((x >> 1) & fives) + 1;
+   i = (i & threes) + ((i >> 2) & threes);
+   i = (i + (i >> 4)) & zerof;
+   i = i + (i >> 8);
+   i = i + (i >> 16);
+   return i & 0x3F;
 }
 /*
  * bang - Compute !x without using !
@@ -344,7 +357,7 @@ int divpwr2(int x, int n) {
    // not quite working... but close?
 
    int sign = (x >> 31) & 1;
-   printf("%d + %d", sign, x >> n );
+   //printf("%d + %d", sign, x >> n );
    return ( x >> n ) + sign;
 }
 /*
