@@ -3,9 +3,10 @@
 *    Lab Datalab
 *    Brother Jones, ECEN 324
 * Author:
-*    Your Name
+*    Weston Dransfield
 * Summary:
-*    descriptive text
+*    This application shows a variety of 'bit tricks' that can be used
+*    in place of standart operations.
 ***********************************************************************/
 
 /*
@@ -22,7 +23,6 @@
  * it's not good practice to ignore compiler warnings, but in this
  * case it's OK.
  */
-
 #include "btest.h"
 #include <limits.h>
 
@@ -192,7 +192,7 @@ int bitXor(int x, int y) {
  *   Max ops: 6
  *   Rating: 2
  *
- *  Any number XOR itself is always 0. We just need to use two !! in order
+ *  Any number XOR itself is always 0. We just need to use two ! in order
  *  to turn the return value into a 1 or 0.
  */
 int isNotEqual(int x, int y) {
@@ -225,7 +225,7 @@ int getByte(int x, int n) {
  */
 int copyLSB(int x) {
    //Get least significant bit then shift left 31. Use the arithmetic right shift
-   // to fill the bitstring with that bit
+   //to fill the bitstring with that bit
   return (x & 1) << 31 >> 31;
 }
 /*
@@ -336,14 +336,14 @@ int isGreater(int x, int y) {
    // take the XOR to find what is different
    int i = x ^ y;
    int msb1 = (0x80 << 24);
-   
+
    // smear the bits
    i = (i >> 1 ) | i;
    i = (i >> 2 ) | i;
    i = (i >> 4 ) | i;
    i = (i >> 8 ) | i;
    i = (i >> 16) | i;
-   
+
    // find the most significant different bit
    i = i & (~(i >> 1) | ( msb1 ));
 
@@ -394,7 +394,25 @@ int abs(int x) {
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 20
  *   Rating: 3
+ * This method relies on the signs of both a and b and the sign of the sum
+ * http://stackoverflow.com/questions/10078778/bitwise-overflow-checking-in-c
+ * if a and b have different signs, you cannot get overflow.
+ * if they are the same, check that a is different from sum and b is different from sum,
+ * if they are the same, then there was no overflow.
  */
 int addOK(int x, int y) {
-   return 2;
+   //the computed sum
+   int sum = x + y;
+
+   //sign of the first operand
+   int a = x >> 31;
+
+   //sign of the seond operand
+   int b = y >> 31;
+
+   //sign of the sum
+   int sumSign = sum >> 31;
+
+   //check for overflow and convert to 0000 or 00001
+   return (!!(a^b)) | (!(a^sumSign)&!(b^sumSign));
 }
